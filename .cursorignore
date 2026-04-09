@@ -1,0 +1,11 @@
+# Ignore Python caches everywhere in this project
+**/__pycache__/
+__pycache__/
+
+# uv / local envs & build noise
+.venv/
+venv/
+.uv/
+build/
+dist/
+*.egg-info/

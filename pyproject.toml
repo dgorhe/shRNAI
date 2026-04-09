@@ -1,0 +1,59 @@
+[project]
+name = "shrnai"
+version = "0.1.0"
+description = "shRNAI inference (local MVP)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "tensorflow>=2.15,<3",
+    "tf-keras>=2.15",
+]
+
+[dependency-groups]
+dev = [
+    "autopep8>=2.0",
+    "flake8>=7.0",
+    "flake8-pyproject>=1.2",
+    "ipykernel>=6.29",
+    "mypy>=1.11",
+    "pylsp-mypy>=0.7",
+    "python-lsp-server[all]>=1.12",
+    "types-tensorflow",
+]
+
+[tool.uv]
+package = false
+
+[tool.pylsp]
+plugins.autopep8.enabled = true
+plugins.autopep8.max_line_length = 120
+
+[tool.pylsp-mypy]
+enabled = true
+live_mode = false
+
+[tool.autopep8]
+max_line_length = 120
+aggressive = 3
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = ["E203"]
+
+[tool.mypy]
+python_version = "3.10"
+check_untyped_defs = true
+warn_unused_ignores = true
+explicit_package_bases = true
+namespace_packages = true
+
+[[tool.mypy.overrides]]
+module = "tf_keras.*"
+ignore_missing_imports = true
+
+# Pylance / basedpyright: point at the uv-managed interpreter (TensorFlow, tf_keras).
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+include = ["shRNAI"]

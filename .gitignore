@@ -1,0 +1,21 @@
+# Byte-compiled / cache (anywhere in the tree)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# uv — virtualenvs & local state (commit uv.lock for reproducible installs)
+.venv/
+venv/
+
+# uv: project-local tool state / cache (if present)
+.uv/
+
+# uv / setuptools: build & packaging outputs
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+
+.pytest_cache/
