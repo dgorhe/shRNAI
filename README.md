@@ -3,6 +3,34 @@
 Convolutional neural network-based deep learning tool for predicting knockdown
 efficiency of shRNAs.
 
+## Install from GitHub (e.g. Google Colab)
+
+```python
+!pip install "git+https://github.com/dgorhe/shRNAI.git"
+```
+
+The wheel includes the `shRNAI` package only — **not** `models/*.h5`. Download
+weights into the runtime (for example `./models`) or set `SHRNAI_MODELS_DIR`:
+
+```python
+# Option A: wget into Colab cwd (then use ./models automatically)
+!mkdir -p models
+!wget -q -O models/pri.h5 https://raw.githubusercontent.com/ParkSJ-91/shRNAI/main/models/pri.h5
+!wget -q -O models/22nt.h5 https://raw.githubusercontent.com/ParkSJ-91/shRNAI/main/models/22nt.h5
+
+from shRNAI.inference import predict_potency
+scores = predict_potency(["ATAGTTTCAAACATCATCTTGT"])
+```
+
+```python
+# Option B: explicit path
+from pathlib import Path
+scores = predict_potency(guides, models_dir=Path("/content/models"))
+```
+
+Colab already ships TensorFlow; `pip` may still install the versions from
+`pyproject.toml` (can take a few minutes).
+
 ## Inference (local MVP)
 
 1. **Environment** (from repo root):

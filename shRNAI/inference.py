@@ -33,16 +33,28 @@ from shRNAI.module_simple import pair
 _models: Optional[Tuple[Any, Any]] = None
 
 
-def _repo_root() -> Path:
+def _package_root() -> Path:
+    """Directory containing the installed ``shRNAI`` package (e.g. site-packages)."""
     return Path(__file__).resolve().parent.parent
 
 
 def default_models_dir() -> Path:
     """Directory with ``pri.h5`` and ``22nt.h5``.
 
-    Default location is ``<repo>/models``.
+    Resolution order:
+
+    1. Environment variable ``SHRNAI_MODELS_DIR`` (absolute path to a folder).
+    2. ``<cwd>/models`` if both weight files exist there (typical for Colab after
+       downloading weights into the working directory).
+    3. ``<package_root>/models`` (editable / source checkout next to ``shRNAI/``).
     """
-    return _repo_root() / "models"
+    env = os.environ.get("SHRNAI_MODELS_DIR")
+    if env:
+        return Path(env).expanduser().resolve()
+    cwd_models = Path.cwd() / "models"
+    if (cwd_models / "pri.h5").is_file() and (cwd_models / "22nt.h5").is_file():
+        return cwd_models.resolve()
+    return _package_root() / "models"
 
 
 def _validate_guide(g: str, index: int) -> str:

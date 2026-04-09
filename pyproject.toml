@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling>=1.18"]
+build-backend = "hatchling.build"
+
 [project]
 name = "shrnai"
 version = "0.1.0"
@@ -23,7 +27,11 @@ dev = [
 ]
 
 [tool.uv]
-package = false
+package = true
+
+# Installable wheel: only the shRNAI Python package (not models/*.h5 — fetch separately).
+[tool.hatch.build.targets.wheel]
+packages = ["shRNAI"]
 
 [tool.pylsp]
 plugins.autopep8.enabled = true
